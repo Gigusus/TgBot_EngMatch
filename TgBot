@@ -1,0 +1,32 @@
+import telebot
+from telebot import types
+from telebot.types import ReplyKeyboardMarkup
+
+bot = telebot.TeleBot('6908302546:AAG8MDKJTdUuYpdSaR_ryHobISEtU-9c5pM')
+
+@bot.message_handler(commands=['start'])
+def main(message):
+    bot.send_message(message.chat.id, 'Привет!\n\nРад тебя приветствовать в пространстве, где ученики могут найти себе учителей английского, а учителя английского - учеников.')
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    btn1 = types.KeyboardButton('Я - ученик')
+    btn2 = types.KeyboardButton('Я - учитель')
+    (markup.row(btn1, btn2))
+    bot.send_message(message.chat.id, 'Давай определимся:', reply_markup=markup)
+
+@bot.message_handler(content_types=['text'])
+def func(message):
+    if message.text == 'Я - ученик':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Для себя')
+        btn2 = types.KeyboardButton('Не для себя')
+        back = types.KeyboardButton('Главное меню')
+        markup.add(btn1, btn2, back)
+        bot.send_message(message.chat.id, 'Ищу преподавателя:', reply_markup=markup)
+
+    elif message.text == 'Для себя':
+        bot.send_message(message.chat.id, 'Как тебя зовут?')
+
+    elif message.text == 'Не для себя':
+        bot.send_message(message.chat.id, 'Как зовут ученика?')
+
+    elif message.text == 'Главное меню':
