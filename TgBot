@@ -30,3 +30,6 @@ def func(message):
         bot.send_message(message.chat.id, 'Как зовут ученика?')
 
     elif message.text == 'Главное меню':
+
+
+bot.polling(none_stop=True)
